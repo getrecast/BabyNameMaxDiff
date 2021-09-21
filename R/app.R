@@ -1,5 +1,6 @@
 library(shiny)
 library(tidyverse)
+library(shinyjs)
 
 baby_name_maxdiff <- function(){
 
