@@ -4,10 +4,10 @@ ui = fluidPage(
   useShinyjs(),
   tags$head(tags$style(".rightAlign{float:right;}")),
 
-  h3("Baby Name Ranking"),
+  div(style="color: #76bae0", h2("Baby Name Ranking")),
   p(paste("This app implements a MaxDiff exercise to help husbands and wives",
           "choose a name that is maximally preferred by both individuals.")),
-  p("To begin, enter between 5-30 names that you would consider naming your baby."),
+  p("To begin, enter 5-30 names that you would consider naming your baby, or use a random set of 20 popular names."),
   p(paste("Once entered, both spouses will be asked to complete a series of questions",
           "indicating which names they most like and most dislike. The app will",
           "recommend a number of questions, but you can always answer more for",
@@ -17,7 +17,7 @@ ui = fluidPage(
   uiOutput("PotentialNameGrabber"),
   hidden(
     div(id="MaxDiffQuestion",
-        h3("Spouse #1"),
+        uiOutput("SpouseHeader"),
         h5("Which of the following names do you like least and most?"),
         fluidRow(column(6, div(class = 'rightAlign',
                       radioButtons("LeastLiked", "Least", width="80px",
@@ -26,14 +26,25 @@ ui = fluidPage(
                       choiceValues = 1:4))),
 
 
-                      column(6, radioButtons("MostLiked", "Most",
+                      column(6, radioButtons("MostLiked", "Most", width = "80px",
                                      selected=character(),
-                                     choiceNames = c("", "", "", ""),
+                                     choiceNames = list(HTML("&nbsp;"),HTML("&nbsp;"),HTML("&nbsp;"),HTML("&nbsp;")),
                                      choiceValues = 1:4))
         ),
-        div(class="rightAlign", actionButton("SubmitMD", "Submit Answer"))
+        div(class="rightAlign",
+            actionButton(style="background-color: #76bae0; margin-bottom:10px;","SubmitMD", "Submit Answer"),
+br(),
+
+                hidden(actionButton(style="background-color: #ffd1d7",
+                                    "Finish", "Skip to next spouse early (not recommended)")))
 
         )),
+
+  hidden(
+    div(id="ResultsScreen",
+        uiOutput("Recommendation"),
+        plotOutput("Rankings"))
+  ),
 
   br()
 
