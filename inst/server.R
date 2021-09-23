@@ -15,9 +15,9 @@ server <- function(session, input, output) {
 
 
     list(
-      fluidRow(column(4, actionButton("RandomBoys", "Random 20 popular boy names",
+      fluidRow(column(4, actionButton("RandomBoys", "Random 20 boy names",
                                       style="background-color: #76bae0;")),
-               column(6, actionButton("RandomGirls", "Random 20 popular girl names",
+               column(6, actionButton("RandomGirls", "Random 20 girl names",
                                       style="background-color: #ffd1d7"))),
       actionButton("UseMyOwn", "Use my own list of names", style="margin-top:10px;"),
       hidden(div(id="OwnNames",
@@ -85,13 +85,33 @@ server <- function(session, input, output) {
   })
 
   observeEvent(input$BeginRanking, {
-    potentials(sapply(1:n_names(), function(i)input[[paste0("potential_name_", i)]]))
+    potentials(sort(sapply(1:n_names(), function(i)input[[paste0("potential_name_", i)]])))
+    transition_to_md()
+  })
+
+  observeEvent(input$RandomBoys, {
+    potentials(sort(babynames::babynames %>% filter(year==2017,
+                                    sex=="M") %>%
+      sample_n(20, weight=prop) %>% pull(name)
+    ))
+    transition_to_md()
+  })
+
+  observeEvent(input$RandomGirls, {
+    potentials(sort(babynames::babynames %>% filter(year==2017,
+                                               sex=="F") %>%
+                 sample_n(20, weight=prop) %>% pull(name)
+    ))
+    transition_to_md()
+  })
+
+  transition_to_md<-function(){
     hide("Surname")
     hide("PotentialNameGrabber")
     show("MaxDiffQuestion")
     person(1)
     updateQuestion()
-  })
+  }
 
   updateQuestion <- function(){
 
@@ -137,7 +157,7 @@ server <- function(session, input, output) {
   }, ignoreNULL = T)
 
   create_rows <- function(){
-    tibble(id=person(),
+    res = tibble(id=person(),
            question_set=rep((questions_answered()*2-1):(questions_answered()*2), each=4),
            choices=rep(1:4,2)) %>%
       bind_cols(
@@ -146,6 +166,8 @@ server <- function(session, input, output) {
           setNames(potentials())
       ) %>%
       mutate(y=c(as.numeric(input$MostLiked), rep(0, 3), as.numeric(input$LeastLiked), rep(0,3)))
+
+    res
   }
 
   ##If MOST is clicked, uncheck least
