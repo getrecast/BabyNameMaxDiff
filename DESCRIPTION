@@ -18,4 +18,5 @@ Imports: ChoiceModelR,
          fastDummies,
          shinyjs,
          tidyverse,
-         shiny
+         shiny,
+         pkgload

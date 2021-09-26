@@ -2,6 +2,13 @@ library(shiny)
 library(tidyverse)
 library(shinyjs)
 
+#' Start the Baby Name MaxDiff Shiny app
+#'
+#' @description
+#' Will start a local Shiny app that will walk the user through a MaxDiff exercise
+#'
+#'
+#' @export
 baby_name_maxdiff <- function(){
 
 
