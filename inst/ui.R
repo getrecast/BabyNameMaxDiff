@@ -13,12 +13,12 @@ ui = fluidPage(
           "recommend a number of questions, but you can always answer more for",
           "more accurate results.")),
 
-  textInput("Surname", "Enter the family surname", value="Curtis"),
+  textInput("Surname", "Enter the family surname"),
   uiOutput("PotentialNameGrabber"),
   hidden(
     div(id="MaxDiffQuestion",
         uiOutput("SpouseHeader"),
-        h5("Which of the following names do you like least and most?"),
+        uiOutput("QuestionText"),
         fluidRow(column(6, div(class = 'rightAlign',
                       radioButtons("LeastLiked", "Least", width="80px",
                       selected=character(),

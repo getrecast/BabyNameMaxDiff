@@ -7,7 +7,7 @@ server <- function(session, input, output) {
   person = reactiveVal(NULL)
   data_matrix = reactiveVal(NULL)
   currently_showing = reactiveVal(NULL)
-  questions_answered = reactiveVal(NULL)
+  questions_answered = reactiveVal(0)
   utilities<-reactiveVal(NULL)
 
   output$PotentialNameGrabber<- renderUI({
@@ -148,10 +148,11 @@ server <- function(session, input, output) {
   })
 
   observeEvent(questions_answered(), {
-    if (person()==1 & questions_answered()>(length(potentials()))){
+    req(person())
+    if (person()==1 & questions_answered()>=(length(potentials()))*3/4){
       updateActionButton(session, "Finish", "Proceed to next spouse")
     }
-    if (person()==2 & questions_answered()>(length(potentials()))){
+    if (person()==2 & questions_answered()>=(length(potentials()))*3/4){
       updateActionButton(session, "Finish", "See results")
     }
   }, ignoreNULL = T)
@@ -169,6 +170,18 @@ server <- function(session, input, output) {
 
     res
   }
+
+  output$QuestionText<-renderUI({
+    if (questions_answered()<ceiling(length(potentials())*3/4)){
+
+    h5(paste0("(", questions_answered()+1, "/", ceiling(length(potentials())*3/4), ") ",
+              "Which of the following names do you like least and most?"))
+    }else{
+      h5(paste0("BONUS: Which of the following names do you like least and most?"))
+    }
+
+
+  })
 
   ##If MOST is clicked, uncheck least
   observeEvent(input$MostLiked, {
@@ -201,6 +214,7 @@ server <- function(session, input, output) {
       questions_answered(0)
       hide("Finish")
       updateActionButton(session, "Finish", "Finish early (not recommended)")
+      updateQuestion()
       }else{
       hide(id="MaxDiffQuestion")
       shinybusy::show_modal_spinner(text="Calculating name scores", color="#ffd1d7")

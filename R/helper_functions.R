@@ -15,10 +15,12 @@
 
 estimate_utilities <- function(data){
   #print(as.data.frame(data))
-  #save(data, file="Temp.RData")
+  # save(data, file="Temp.RData")
+  # print(data)
  ChoiceModelR::choicemodelr(
    as.data.frame(data), xcoding= rep(1, ncol(data)-4),
-   mcmc=list(R=10000, use=5000))
+   prior=list(Amu=1),
+   mcmc=list(R=2000, use=500))
 
   res= read_csv("RBetas.csv") %>%
     setNames(names(data)[c(1, 4:(ncol(data)-1))])

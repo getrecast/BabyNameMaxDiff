@@ -1,17 +1,21 @@
 Package: BabyNameMaxDiff
-Title: What the Package Does (One Line, Title Case)
+Title: MaxDiff Baby Name Recommender
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Jackson",
+           family = "Curtis",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+           email = "jcurtis210@gmail.com")
+Description: This app implements a MaxDiff ranking exercise and algorithm to help parents identify mutually acceptable names to name their baby. The app lets you rank your own list of names or use random names from the babynames dataset.
+License: file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
-Imports: ChoiceModelR
+Imports: ChoiceModelR,
+         shinybusy,
+         babynames,
+         fastDummies,
+         shinyjs,
+         tidyverse,
+         shiny
