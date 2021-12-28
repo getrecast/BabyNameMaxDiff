@@ -121,7 +121,9 @@ server <- function(session, input, output) {
     updateRadioButtons(session, "LeastLiked", choiceValues = 1:4,
                        choiceNames =map(q_names, ~HTML(paste0("&nbsp;&nbsp;&nbsp;", .x))),
                        selected=character())
-    updateRadioButtons(session, "MostLiked",  selected=character())
+    updateRadioButtons(session, "MostLiked",  selected=character(),
+                       choiceValues=1:4,
+                       choiceNames =map(q_names, ~HTML(paste0("&nbsp;&nbsp;&nbsp;", .x))))
 
   }
 
@@ -218,7 +220,7 @@ server <- function(session, input, output) {
       }else{
       hide(id="MaxDiffQuestion")
       shinybusy::show_modal_spinner(
-        text="Calculating name scores ... This is running a Bayesian model on a Raspberry Pi, so it may take awhile!",
+        text="Calculating name scores ... This is running a Bayesian model on a Raspberry Pi, so it may take a minute or two!",
                                     color="#ffd1d7")
       utils= estimate_utilities(data_matrix())
       shinybusy::remove_modal_spinner()

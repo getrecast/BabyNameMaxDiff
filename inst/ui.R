@@ -19,18 +19,16 @@ ui = fluidPage(
     div(id="MaxDiffQuestion",
         uiOutput("SpouseHeader"),
         uiOutput("QuestionText"),
-        fluidRow(column(2,
                       radioButtons("LeastLiked", "Least",
                       selected=character(),
                       choiceNames = c("Baby 1", "Baby 2", "Baby 3", "Baby 4"),
-                      choiceValues = 1:4, width="30px")),
+                      choiceValues = 1:4, width="30px"),
 
 
-                      column(1, radioButtons("MostLiked", "Most", width = "20px",
+                   radioButtons("MostLiked", "Most", width = "20px",
                                      selected=character(),
                                      choiceNames = list(HTML("&nbsp;"),HTML("&nbsp;"),HTML("&nbsp;"),HTML("&nbsp;")),
-                                     choiceValues = 1:4))
-        ),
+                                     choiceValues = 1:4),
         div(class="rightAlign",
             actionButton(style="background-color: #76bae0; margin-bottom:10px;","SubmitMD", "Submit Answer"),
 br(),
