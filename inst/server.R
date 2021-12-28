@@ -217,7 +217,9 @@ server <- function(session, input, output) {
       updateQuestion()
       }else{
       hide(id="MaxDiffQuestion")
-      shinybusy::show_modal_spinner(text="Calculating name scores", color="#ffd1d7")
+      shinybusy::show_modal_spinner(
+        text="Calculating name scores ... This is running a Bayesian model on a Raspberry Pi, so it may take awhile!",
+                                    color="#ffd1d7")
       utils= estimate_utilities(data_matrix())
       shinybusy::remove_modal_spinner()
       utilities(utils)
