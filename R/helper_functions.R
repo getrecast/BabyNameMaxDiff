@@ -15,15 +15,25 @@
 
 estimate_utilities <- function(data){
   #print(as.data.frame(data))
-  # save(data, file="Temp.RData")
+  #save(data, file="Temp.RData")
+  #stop("all done")
   # print(data)
+
+ #Attach an extra block to fix choicemodelr's bad
+ data=data %>% bind_rows(data %>% slice(1:16) %>%
+    mutate(id=1+max(data$id),
+           question_set=rep(1:4, each=4),
+           across(-c(id:choices, y), ~0),
+           y=c(1,0,0,0,2,0,0,0,
+               3,0,0,0,4,0,0,0)))
  ChoiceModelR::choicemodelr(
    as.data.frame(data), xcoding= rep(1, ncol(data)-4),
    prior=list(Amu=1),
    mcmc=list(R=3000, use=1000))
 
   res= read_csv("RBetas.csv") %>%
-    setNames(names(data)[c(1, 4:(ncol(data)-1))])
+    setNames(names(data)[c(1, 4:(ncol(data)-1))]) %>%
+    filter(id<=2) #remove the extra rows
   file.remove("RBetas.csv")
   res
 }
