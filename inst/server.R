@@ -217,7 +217,8 @@ server <- function(session, input, output) {
         text="Calculating name scores ... This is running a Bayesian model, so it may take a minute or two!",
                                     color="#ffd1d7")
       utils= estimate_utilities(data_matrix())
-      save(utils, file=paste0("logging/", input$Surname, "_", Sys.time()))
+      print(input$Surname)
+      print(utils)
       shinybusy::remove_modal_spinner()
       utilities(utils)
       show("ResultsScreen")

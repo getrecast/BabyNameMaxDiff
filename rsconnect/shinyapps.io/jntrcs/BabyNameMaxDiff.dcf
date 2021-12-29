@@ -5,9 +5,9 @@ account: jntrcs
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 4733407
-bundleId: 5072235
+bundleId: 5415846
 url: https://jntrcs.shinyapps.io/BabyNameMaxDiff/
-when: 1632618302.30501
+when: 1640744149.21064
 asMultiple: FALSE
 asStatic: FALSE
-ignoredFiles: man/baby_name_maxdiff.Rd
+ignoredFiles: Temp.RData|man/baby_name_maxdiff.Rd
