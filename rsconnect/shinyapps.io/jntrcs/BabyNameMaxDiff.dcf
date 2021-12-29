@@ -1,0 +1,13 @@
+name: BabyNameMaxDiff
+title: BabyNameMaxDiff
+username:
+account: jntrcs
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 4733407
+bundleId: 5072235
+url: https://jntrcs.shinyapps.io/BabyNameMaxDiff/
+when: 1632618302.30501
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: man/baby_name_maxdiff.Rd
