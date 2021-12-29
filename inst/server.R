@@ -44,8 +44,6 @@ server <- function(session, input, output) {
   observeEvent(input$UseMyOwn,{
     show("OwnNames")
     hide("UseMyOwn")
-    hide("RandomBoys")
-    hide("RandomGirls")
   })
 
   observeEvent(input$AddMore, {
@@ -72,14 +70,10 @@ server <- function(session, input, output) {
     if(n_names()>5)show("RemoveName") else hide("RemoveName")
   })
 
+
   observe({
     toggleState("RandomBoys", condition=nchar(input$Surname)>0)
     toggleState("RandomGirls", condition=nchar(input$Surname)>0)
-    toggleState("UseMyOwn", condition=nchar(input$Surname)>0)
-
-  })
-
-  observe({
     names = sapply(1:n_names(), function(i)input[[paste0("potential_name_", i)]])
     toggleState("BeginRanking", condition=all(nchar(names)>0) & nchar(input$Surname)>0)
   })
@@ -220,9 +214,10 @@ server <- function(session, input, output) {
       }else{
       hide(id="MaxDiffQuestion")
       shinybusy::show_modal_spinner(
-        text="Calculating name scores ... This is running a Bayesian model on a Raspberry Pi, so it may take a minute or two!",
+        text="Calculating name scores ... This is running a Bayesian model, so it may take a minute or two!",
                                     color="#ffd1d7")
       utils= estimate_utilities(data_matrix())
+      save(utils, file=paste0("logging/", input$Surname, "_", Sys.time()))
       shinybusy::remove_modal_spinner()
       utilities(utils)
       show("ResultsScreen")

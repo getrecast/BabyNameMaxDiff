@@ -13,7 +13,7 @@ ui = fluidPage(
           "recommend a number of questions, but you can always answer more for",
           "more accurate results.")),
 
-  textInput("Surname", "Enter the family surname"),
+  textInput("Surname", "Enter the family surname to continue"),
   uiOutput("PotentialNameGrabber"),
   hidden(
     div(id="MaxDiffQuestion",
